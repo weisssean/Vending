@@ -11,20 +11,18 @@ import java.util.ArrayList;
 /**
  * Created by MonkeyFish on 10/21/15.
  */
-public class Vendor implements I_Vendor,Serializable{
+public class Vendor implements Serializable{
 
 
     private static final int MINSTOCK = 10;
-    private int balance = 0;
-    public ArrayList<VendingProduct> products = new ArrayList<>();
+    private static int balance = 0;
+    public static ArrayList<VendingProduct> products = new ArrayList<>();
 
-    @Override
-    public int getBalance() {
+     public static int getBalance() {
         return balance;
     }
 
-    @Override
-    public void sellProduct(VendingProduct product) {
+     public static void sellProduct(VendingProduct product) {
         for (VendingProduct p:products) {
             if (product.id().equals(p.id())){
                 p.sellProduct();
@@ -35,30 +33,25 @@ public class Vendor implements I_Vendor,Serializable{
             notifyLowStock(product);
         }
     }
-    @Override
-    public void notifyLowStock(VendingProduct product) {
+     public static void notifyLowStock(VendingProduct product) {
         //TODO: impliment notify the supplier
 
     }
-    @Override
-    public void notifyReStock(VendingProduct product) {
+     public static void notifyReStock(VendingProduct product) {
         //TODO: impliment notify the supplier
 
     }
 
 
-    @Override
-    public void addProduct(String name, int price, int startingInventory ) {
+     public static void addProduct(String name, int price, int startingInventory) {
         products.add(new VendingProduct(name, price,startingInventory));
     }
 
-    @Override
-    public void setBalance(int balance) {
-        this.balance = balance;
+     public static void setBalance(int bal) {
+        balance = bal;
     }
 
-    @Override
-    public void addInventory(VendingProduct product,int inventory){
+     public static void addInventory(VendingProduct product,int inventory){
         for (VendingProduct p:products) {
             if (product.id().equals(p.id())){
                 p.addQuantity(inventory);

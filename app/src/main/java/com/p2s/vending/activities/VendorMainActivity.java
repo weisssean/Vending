@@ -7,15 +7,14 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.p2s.vending.R;
-import com.p2s.vending.classes.Vendor;
 import com.p2s.vending.classes.VendingProduct;
+import com.p2s.vending.classes.Vendor;
 import com.p2s.vending.fragments.BalanceFragment;
 import com.p2s.vending.fragments.ProductsFragment;
 import com.p2s.vending.fragments.TransactionFinishedFragment;
@@ -23,23 +22,14 @@ import com.p2s.vending.fragments.TransactionFinishedFragment;
 public class VendorMainActivity extends Activity implements ProductsFragment.OnFragmentInteractionListener, BalanceFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "VendorMainActivity";
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     TransactionFinishedFragment transactionFinishedFragment;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+
     private ViewPager mViewPager;
-    private Vendor vendor;
+    // private static Vendor vendor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +78,9 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
     }
 
 
-
     @Override
     public void setNewBalance(int _newBalance) {
-        vendor.setBalance(_newBalance);
+        Vendor.setBalance(_newBalance);
     }
 
 
@@ -113,9 +102,9 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
                 case 0:
                     return BalanceFragment.newInstance();
                 case 1:
-                    return ProductsFragment.newInstance(vendor.products);
+                    return ProductsFragment.newInstance(Vendor.products);
                 case 2:
-                    transactionFinishedFragment =  TransactionFinishedFragment.newInstance();
+                    transactionFinishedFragment = TransactionFinishedFragment.newInstance();
                     return transactionFinishedFragment;
                 default:
                     return null;
@@ -152,21 +141,21 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
 
 
     public void goToProducts(View v) {
-        if (vendor.getBalance() <= 0) {
+        if (Vendor.getBalance() <= 0) {
             Toast.makeText(getApplicationContext(), "Zero Balance", Toast.LENGTH_LONG).show();
             return;
         }
 
-        ProductsFragment.setBalance(vendor.getBalance());
+        ProductsFragment.setBalance(Vendor.getBalance());
         mViewPager.setCurrentItem(1, true);
     }
+
     public void shopMore(View v) {
-        vendor.setBalance(0);
-        BalanceFragment.setBalance(vendor.getBalance());
-        ProductsFragment.setBalance(vendor.getBalance());
+        Vendor.setBalance(0);
+        BalanceFragment.setBalance(Vendor.getBalance());
+        ProductsFragment.setBalance(Vendor.getBalance());
         mViewPager.setCurrentItem(0, true);
     }
-
 
 
     @Override
@@ -174,19 +163,17 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
         Toast.makeText(getApplicationContext(), "vending: " + product.name(), Toast.LENGTH_LONG).show();
 
 
-        TransactionFinishedFragment.setBalance(vendor.getBalance());
+        TransactionFinishedFragment.setBalance(Vendor.getBalance());
         transactionFinishedFragment.setProduct(product);
-    vendor.sellProduct(product);
+        Vendor.sellProduct(product);
         mViewPager.setCurrentItem(2, true);
 
     }
 
     private void createSampleData() {
-        this.vendor = new Vendor();
-        vendor.addProduct("Coca Cola", 85, 2);
-        vendor.addProduct("Lays Chips", 105, 0);
-        vendor.addProduct("Twix", 110, 16);
-        Log.d(TAG, vendor.toString());
+        Vendor.addProduct("Coca Cola", 85, 2);
+        Vendor.addProduct("Lays Chips", 105, 0);
+        Vendor.addProduct("Twix", 110, 16);
     }
 
     private void backAction() {
@@ -200,6 +187,7 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
         }
     }
+
     @Override
     public void onBackPressed() {
         backAction();
