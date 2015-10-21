@@ -18,6 +18,13 @@ public class VendingApp extends Application {
     public void onCreate() {
         super.onCreate();
         populateCoins();
+        Log.d("%1", 10 % 5 + "");
+        Log.d("%2",10.1%5+"");
+        Log.d("%3",5%10+"");
+        Log.d("%4", 10 / 5 + "");
+        Log.d("%5",10.1/5+"");
+        Log.d("%6",5/10+"");
+
     }
 
     private void populateCoins() {

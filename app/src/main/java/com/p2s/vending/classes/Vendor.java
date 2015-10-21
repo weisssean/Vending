@@ -72,14 +72,19 @@ public class Vendor implements I_Vendor,Serializable{
     public static ArrayList<Coin> getChange(double balance) {
         ArrayList<Coin> change = new ArrayList<>();
 
+
         for (int i = VendingApp.coins.size(); i > 0; i--) {
             Coin c = VendingApp.coins.get(i - 1);
             Log.d("Change", "coin= " + c.name());
 
-            if (balance / c.value() > 1) {
+            if (balance / c.value() >= 1) {
                 c.quantity = (long) ((double)balance / (double)c.value());
                 change.add(c);
+                Log.d("Change", "balance-= " + c.quantity * c.value());
+
                 balance -= c.quantity * c.value();
+                Log.d("Change", "balance= " + balance);
+
 
             }
         }
