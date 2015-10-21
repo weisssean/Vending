@@ -118,7 +118,7 @@ public class BalanceFragment extends ListFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
 
-        void setNewBalance(int mBallance);
+        void setNewBalance(int mBalance);
     }
 
 }

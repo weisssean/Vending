@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.p2s.vending.R;
-import com.p2s.vending.classes.Vender;
+import com.p2s.vending.classes.Vendor;
 import com.p2s.vending.classes.VendingProduct;
 import com.p2s.vending.fragments.BalanceFragment;
 import com.p2s.vending.fragments.ProductsFragment;
@@ -39,7 +39,7 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private Vender mVender;
+    private Vendor vendor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +90,8 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
 
 
     @Override
-    public void setNewBalance(int _newBallance) {
-        mVender.setBalance(_newBallance);
+    public void setNewBalance(int _newBalance) {
+        vendor.setBalance(_newBalance);
     }
 
 
@@ -113,7 +113,7 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
                 case 0:
                     return BalanceFragment.newInstance();
                 case 1:
-                    return ProductsFragment.newInstance(mVender.products);
+                    return ProductsFragment.newInstance(vendor.products);
                 case 2:
                     transactionFinishedFragment =  TransactionFinishedFragment.newInstance();
                     return transactionFinishedFragment;
@@ -152,18 +152,18 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
 
 
     public void goToProducts(View v) {
-        if (mVender.getBalance() <= 0) {
+        if (vendor.getBalance() <= 0) {
             Toast.makeText(getApplicationContext(), "Zero Balance", Toast.LENGTH_LONG).show();
             return;
         }
 
-        ProductsFragment.setBalance(mVender.getBalance());
+        ProductsFragment.setBalance(vendor.getBalance());
         mViewPager.setCurrentItem(1, true);
     }
     public void shopMore(View v) {
-        mVender.setBalance(0);
-        BalanceFragment.setBalance(mVender.getBalance());
-        ProductsFragment.setBalance(mVender.getBalance());
+        vendor.setBalance(0);
+        BalanceFragment.setBalance(vendor.getBalance());
+        ProductsFragment.setBalance(vendor.getBalance());
         mViewPager.setCurrentItem(0, true);
     }
 
@@ -174,19 +174,19 @@ public class VendorMainActivity extends Activity implements ProductsFragment.OnF
         Toast.makeText(getApplicationContext(), "vending: " + product.name(), Toast.LENGTH_LONG).show();
 
 
-        TransactionFinishedFragment.setBalance(mVender.getBalance());
+        TransactionFinishedFragment.setBalance(vendor.getBalance());
         transactionFinishedFragment.setProduct(product);
-    mVender.sellProduct(product);
+    vendor.sellProduct(product);
         mViewPager.setCurrentItem(2, true);
 
     }
 
     private void createSampleData() {
-        this.mVender = new Vender();
-        mVender.addProduct("Coca Cola", 85,2);
-        mVender.addProduct("Lays Chips", 105,0);
-        mVender.addProduct("Twix", 110,16);
-        Log.d(TAG, mVender.toString());
+        this.vendor = new Vendor();
+        vendor.addProduct("Coca Cola", 85, 2);
+        vendor.addProduct("Lays Chips", 105, 0);
+        vendor.addProduct("Twix", 110, 16);
+        Log.d(TAG, vendor.toString());
     }
 
     private void backAction() {

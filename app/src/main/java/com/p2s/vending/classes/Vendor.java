@@ -2,9 +2,8 @@ package com.p2s.vending.classes;
 
 import android.util.Log;
 
-import com.p2s.vending.Constants;
 import com.p2s.vending.VendingApp;
-import com.p2s.vending.interfaces.I_Vender;
+import com.p2s.vending.interfaces.I_Vendor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,9 +11,10 @@ import java.util.ArrayList;
 /**
  * Created by MonkeyFish on 10/21/15.
  */
-public class Vender implements I_Vender,Serializable{
+public class Vendor implements I_Vendor,Serializable{
 
 
+    private static final int MINSTOCK = 10;
     private int balance = 0;
     public ArrayList<VendingProduct> products = new ArrayList<>();
 
@@ -31,6 +31,19 @@ public class Vender implements I_Vender,Serializable{
             }
 
         }
+        if (product.stock()>MINSTOCK){
+            notifyLowStock(product);
+        }
+    }
+    @Override
+    public void notifyLowStock(VendingProduct product) {
+        //TODO: impliment notify the supplier
+
+    }
+    @Override
+    public void notifyReStock(VendingProduct product) {
+        //TODO: impliment notify the supplier
+
     }
 
 
@@ -44,11 +57,19 @@ public class Vender implements I_Vender,Serializable{
         this.balance = balance;
     }
 
-    public void addInventory(VendingProduct vp,int inventory){
-
+    @Override
+    public void addInventory(VendingProduct product,int inventory){
+        for (VendingProduct p:products) {
+            if (product.id().equals(p.id())){
+                p.addQuantity(inventory);
+                notifyReStock(product);
+                return;
+            }
+        }
     }
 
-     public static ArrayList<Coin> getChange(double balance) {
+
+    public static ArrayList<Coin> getChange(double balance) {
         ArrayList<Coin> change = new ArrayList<>();
 
         for (int i = VendingApp.coins.size(); i > 0; i--) {

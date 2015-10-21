@@ -5,12 +5,14 @@
     <application
         android:allowBackup="true"
         android:name=".VendingApp"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_v"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.VendorMainActivity"
-            android:label="@string/title_activity_vendor_main" >
+            android:label="@string/app_name"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

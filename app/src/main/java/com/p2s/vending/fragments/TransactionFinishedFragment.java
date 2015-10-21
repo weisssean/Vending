@@ -1,7 +1,6 @@
 package com.p2s.vending.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,14 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.p2s.vending.R;
-import com.p2s.vending.VendingApp;
 import com.p2s.vending.adapters.ChangeAdapter;
-import com.p2s.vending.adapters.CoinAdapter;
-import com.p2s.vending.classes.Coin;
-import com.p2s.vending.classes.Vender;
+import com.p2s.vending.classes.Vendor;
 import com.p2s.vending.classes.VendingProduct;
-
-import java.util.ArrayList;
 
 public class TransactionFinishedFragment extends ListFragment {
 
@@ -58,7 +52,7 @@ public class TransactionFinishedFragment extends ListFragment {
         txt_pname.setText(product.name());
         txt_pprice.setText("$"+(double)product.price()/100);
         txt_changedo.setText("$"+(double)changeDo/100);
-        setListAdapter(new ChangeAdapter(getActivity(), android.R.layout.simple_list_item_2, Vender.getChange(changeDo)));
+        setListAdapter(new ChangeAdapter(getActivity(), android.R.layout.simple_list_item_2, Vendor.getChange(changeDo)));
         Toast.makeText(getActivity(),"Thank you for your purchaise!",Toast.LENGTH_LONG).show();
 
     }
